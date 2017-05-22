@@ -1,24 +1,27 @@
 <template>
-  <md-toolbar md-theme="white">
-    <h1 class="md-title" style="flex: 1">豆瓣</h1>
+  <div class="header-bar">
+    <md-toolbar md-theme="white">
+      <h1 class="md-title">豆瓣</h1>
+      <div class="md-button-container">
+        <md-button style="color: #2384E8">电影</md-button>
+        <md-button style="color: #9F7860">图书</md-button>
+        <md-button style="color: #E4A813">广播</md-button>
+        <md-button style="color: #2AB8CC">小组</md-button>
+        <md-button style="color: #42bd56">
+          <md-icon>search</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+  </div>
 
-    <md-button style="color: #2384E8">电影</md-button>
-    <md-button style="color: #9F7860">图书</md-button>
-    <md-button style="color: #E4A813">广播</md-button>
-    <md-button style="color: #2AB8CC">小组</md-button>
-    <md-button style="color: #42bd56">
-      <md-icon>search</md-icon>
-    </md-button>
-  </md-toolbar>
 </template>
 
 <script>
     export default {
-        name: 'header',
+      name: 'header-bar',
       data () {
-           return {
-
-           }
+        return {
+        }
       }
     };
 </script>
@@ -27,7 +30,13 @@
   .md-toolbar {
     border-bottom: 1px solid #f3f3f3;
   }
+  .md-button-container {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
   .md-title {
+    flex: 1;
     display: inline-block;
     max-width: 46px;
     max-height: 22px;
@@ -41,7 +50,7 @@
   }
   .md-button {
     min-width: 32px;
-    margin: 6px;
+    margin: 0;
     padding: 0 8px;
   }
 </style>
