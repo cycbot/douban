@@ -56,19 +56,19 @@
 <style lang="scss" rel="stylesheet/scss" scoped>
   .promItem {
     overflow: hidden;
-    margin: 16px 18px 0 16px;
+    margin: 1.6rem 1.8rem 0 1.6rem;
   }
   .cover {
     float: left;
-    width: 100px;
-    margin-right: 15px;
+    width: 10rem;
+    margin-right: 1.5rem;
   }
   .name {
-    font-size: 20px;
+    font-size: 2rem;
     color: #494949;
-    margin: 10px;
+    margin: 1rem;
     max-width: 100%;
-    line-height: 22px;
+    line-height: 2.2rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -77,11 +77,11 @@
   .price {
     float: right;
     color: #E76648;
-    font-size: 16px;
-    line-height: 22px;
+    font-size: 1.6rem;
+    line-height: 2.2rem;
   }
   .info {
-    font-size: 13px;
+    font-size: 1.3rem;
     font-weight: 300;
     line-height: 1.5;
     color: #9B9B9B;

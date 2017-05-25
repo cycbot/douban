@@ -14,19 +14,22 @@
 </script>
 
 <style>
+  html {
+    font-size: 62.5%;
+  }
   #app {
-    max-width: 568px;
+    max-width: 56.8rem;
     margin: 0 auto;
   }
   .has-header {
-    margin-top: 48px;
+    margin-top: 4.8rem;
   }
   ul, li, a{
     margin: 0;
     padding: 0;
   }
   h2 {
-    font-size: 18px;
+    font-size: 1.8rem;
     font-weight: normal;
     color: #111;
   }
