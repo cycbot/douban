@@ -28,6 +28,12 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
   .md-toolbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+    background: #fff;
     border-bottom: 1px solid #f3f3f3;
   }
   .md-button-container {

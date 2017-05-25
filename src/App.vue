@@ -14,5 +14,7 @@
 </script>
 
 <style>
-
+  .has-header {
+    margin-top: 64px;
+  }
 </style>
