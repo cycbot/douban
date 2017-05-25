@@ -3,24 +3,24 @@
     <h1 class="title">豆瓣</h1>
     <ul class="nav">
       <li>
-        <routerlink style="color: #2384E8" to="/">
+        <router-link style="color: #2384E8" to="/">
           电影
-        </routerlink>
+        </router-link>
       </li>
       <li>
-        <routerlink style="color: #9F7860" to="/book">
+        <router-link style="color: #9F7860" to="/book">
           图书
-        </routerlink>
+        </router-link>
       </li>
       <li>
-        <routerlink style="color: #E4A813" to="/status">
+        <router-link style="color: #E4A813" to="/status">
           广播
-        </routerlink>
+        </router-link>
       </li>
       <li>
-        <routerlink style="color: #2AB8CC" to="/">
+        <router-link style="color: #2AB8CC" to="/">
           小组
-        </routerlink>
+        </router-link>
       </li>
     </ul>
     <span class="search"></span>
@@ -73,7 +73,7 @@
 
     li {
       display: inline-block;
-      font-size: 15px;
+      font-size: 16px;
       margin-right: 12px;
     }
 

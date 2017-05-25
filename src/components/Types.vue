@@ -57,6 +57,7 @@
       padding-right: 18px;
       height: 42px;
       line-height: 42px;
+      font-size: 18px;
       border-top: solid 1px #eee;
       border-right: solid 1px #eee;
     }
