@@ -3,26 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import VueMaterial from 'vue-material'
-import 'vue-material/dist/vue-material.css'
 import VueResource from 'vue-resource'
+import 'normalize.css'
 
 Vue.use(VueResource)
-Vue.use(VueMaterial)
-Vue.material.registerTheme({
-  defualt: {
-    primary: 'cyan',
-    accent: 'red'
-  },
-  green: {
-    primary: 'green',
-    accent: 'pink'
-  },
-  orange: {
-    primary: 'orange',
-    accent: 'green'
-  }
-})
+
 
 /* eslint-disable no-new */
 new Vue({

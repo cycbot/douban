@@ -19,6 +19,19 @@
     margin: 0 auto;
   }
   .has-header {
-    margin-top: 64px;
+    margin-top: 48px;
+  }
+  ul, li, a, h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    font-weight: normal;
+    color: #111;
+  }
+  li {
+    list-style: none;
+  }
+  a {
+    text-decoration: none;
   }
 </style>
