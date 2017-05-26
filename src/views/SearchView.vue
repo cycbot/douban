@@ -13,20 +13,14 @@
             <strong style="color: rgb(35, 132, 232);">电影</strong>
             <span>影院热映</span>
           </a>
-        </div>
-        <div>
           <a href="#" target="_blank">
             <strong style="color: rgb(230, 70, 126);">同城</strong>
             <span>周末活动</span>
           </a>
-        </div>
-        <div>
           <a href="#" target="_blank">
             <strong style="color: rgb(159, 120, 96);">阅读</strong>
             <span>电子书</span>
           </a>
-        </div>
-        <div>
           <a href="#" target="_blank">
             <strong style="color: rgb(225, 100, 77);">东西</strong>
             <span>心爱之物</span>
@@ -39,20 +33,14 @@
             <strong style="color: rgb(122, 106, 219);">电视</strong>
             <span>正在热播</span>
           </a>
-        </div>
-        <div>
           <a href="#" target="_blank">
             <strong style="color: rgb(42, 184, 204);">小组</strong>
             <span>志趣相投</span>
           </a>
-        </div>
-        <div>
           <a href="#" target="_blank">
             <strong style="color: rgb(87, 116, 197);">游戏</strong>
             <span>虚拟世界</span>
           </a>
-        </div>
-        <div>
           <a href="#" target="_blank">
             <strong style="color: rgb(64, 207, 169);">FM</strong>
             <span>红心歌单</span>
@@ -65,20 +53,14 @@
             <strong style="color: rgb(159, 120, 96);">图书</strong>
             <span>畅销排行</span>
           </a>
-        </div>
-        <div>
           <a href="#" target="_blank">
             <strong style="color: rgb(244, 143, 46);">音乐</strong>
             <span>新碟榜</span>
           </a>
-        </div>
-        <div>
           <a href="#" target="_blank">
             <strong style="color: rgb(89, 108, 221);">应用</strong>
             <span>玩手机</span>
           </a>
-        </div>
-        <div>
           <a href="#" target="_blank">
             <strong style="color: rgb(66, 189, 86);">市集</strong>
             <span>购买原创</span>
@@ -86,21 +68,15 @@
         </div>
       </li>
     </ul>
-
-    <div class="sub-nav">
-      <div class="nav-item">
-        <a href="#">注册账号</a><a href="#">登录豆瓣</a>
-      </div>
-      <div class="nav-item">
-        <a href="#">使用桌面版</a><a href="#">使用豆瓣App</a>
-      </div>
-    </div>
+    <sub-nav navBottom="ok"></sub-nav>
   </div>
 </template>
 
 <script>
+    import SubNav from '../components/SubNav.vue'
     export default {
       name: 'search-view',
+      components: { SubNav },
       data () {
         return {
 
@@ -189,27 +165,5 @@
       letter-spacing: 0.1rem;
     }
   }
-  .sub-nav {
-    width: 100%;
-    border-bottom: 0.1rem solid #f3f3f3;
 
-    .nav-item {
-      border-top: 0.1rem solid #f3f3f3;
-      padding: 1.3rem 0;
-      text-align: center;
-    }
-
-    a {
-      width: 50%;
-      display: inline-block;
-      margin: 0 auto;
-      box-sizing: border-box;
-      font-size: 1.5rem;
-      color: #42bd56;
-
-      &:first-child {
-        border-right: 0.1rem solid #e5e5e5;
-      }
-    }
-  }
 </style>
