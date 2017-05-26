@@ -40,35 +40,7 @@
           <a href="javascript:" class="expand">(展开)</a>
         </p>
       </div>
-      <div class="tags">
-        <h2>查看更多豆瓣高分电影电视剧</h2>
-        <ul>
-          <li>
-            <a href="#">悬疑</a>
-          </li>
-          <li>
-            <a href="#">推理</a>
-          </li>
-          <li>
-            <a href="#">小说改编</a>
-          </li>
-          <li>
-            <a href="#">犯罪</a>
-          </li>
-          <li>
-            <a href="#">国产</a>
-          </li>
-          <li>
-            <a href="#">2017</a>
-          </li>
-          <li>
-            <a href="#">中国大陆</a>
-          </li>
-          <li>
-            <a href="#">剧情</a>
-          </li>
-        </ul>
-      </div>
+      <tags noTitle="false"></tags>
       <div class="subject-pics">
         <h2>嫌疑人X的献身的预告片(8)和图片(282)</h2>
         <ul>
@@ -152,9 +124,10 @@
   import Card from '../components/Card.vue'
   import Scroller from '../components/Scroller.vue'
   import DownloadApp from '../components/DownloadApp.vue'
+  import Tags from '../components/Tags.vue'
   export default {
     name: 'subject-view',
-    components: { Banner, Card, Scroller, DownloadApp},
+    components: { Banner, Card, Scroller, DownloadApp, Tags},
     data () {
       return {
         bannerTitle: '聊聊你的观影感受',

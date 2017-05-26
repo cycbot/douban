@@ -54,7 +54,7 @@
 
     a {
       float: right;
-      font-size: 1.8rem;
+      font-size: 1.44rem;
       &:last-child {
         color: #42bd56;
       }
@@ -82,6 +82,7 @@
       display: block;
       max-width: 100%;
       margin-top: 1rem;
+      font-size: 1.6rem;
       line-height: 1.6rem;
       color: #111;
       overflow: hidden;

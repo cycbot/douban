@@ -7,6 +7,7 @@ import GroupView from '../views/GroupView.vue'
 import PagesView from '../views/PagesView.vue'
 import SubjectView from '../views/SubjectView.vue'
 import HomeView from '../views/HomeView.vue'
+import DetailView from '../views/DetailView.vue'
 
 Vue.use(Router)
 
@@ -49,6 +50,11 @@ export default new Router({
           path: 'group',
           name: 'GroupView',
           component: GroupView
+        },
+        {
+          path: 'detail/:id',
+          name: 'DetailView',
+          component: DetailView
         },
         {
           path: '/pages/:classify/subject/:id',

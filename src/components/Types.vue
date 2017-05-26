@@ -110,7 +110,7 @@
       padding-right: 1.8rem;
       height: 4.2rem;
       line-height: 4.2rem;
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       border-top: solid 0.1rem #eee;
       border-right: solid 0.1rem #eee;
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <a href="#" class="item">
+    <a href="/pages/detail/123" class="item">
       <div class="content">
         <img src="https://qnmob2.doubanio.com/img/files/file-1491015332.jpg?imageView2/2/q/80/w/330/h/330/format/jpg">
         <h3>当我读书时，我想些什么</h3>
@@ -52,7 +52,9 @@
   export default {
     name: 'list',
     data () {
+      return {
 
+      }
     }
   };
 </script>
@@ -91,6 +93,7 @@
       img {
         float: right;
         width: 25.6%;
+        height: 8.678rem;
         margin-left: 2.5rem;
       }
 
