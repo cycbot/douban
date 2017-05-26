@@ -1,16 +1,16 @@
 <template>
   <div class="home-view has-header">
     <sub-nav quickNav="ok"></sub-nav>
-
+    <list></list>
   </div>
 </template>
 
 <script>
   import SubNav from '../components/SubNav.vue'
-
+  import List from '../components/List.vue'
   export default {
     name: 'home-view',
-    components: { SubNav },
+    components: { SubNav, List },
     data () {
       return {
 
