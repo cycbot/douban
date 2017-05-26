@@ -1,15 +1,13 @@
 <template>
   <div id="app">
-    <header-bar></header-bar>
     <router-view class="view"></router-view>
+    <router-view class="view" name="subject"></router-view>
   </div>
 </template>
 
 <script>
-  import HeaderBar from './components/HeaderBar.vue'
   export default {
     name: 'app',
-    components: {HeaderBar}
   }
 </script>
 
@@ -38,5 +36,18 @@
   }
   a {
     text-decoration: none;
+  }
+  .header-bar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    height: 4.8rem;
+    padding: 0 1.8rem;
+    background: #fff;
+    border-bottom: 0.1rem solid #f3f3f3;
   }
 </style>

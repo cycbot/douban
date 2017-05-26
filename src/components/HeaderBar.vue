@@ -3,27 +3,27 @@
     <h1 class="title">豆瓣</h1>
     <ul class="nav">
       <li>
-        <router-link style="color: #2384E8" to="/">
+        <router-link style="color: #2384E8" to="/pages/movie">
           电影
         </router-link>
       </li>
       <li>
-        <router-link style="color: #9F7860" to="/book">
+        <router-link style="color: #9F7860" to="/pages/book">
           图书
         </router-link>
       </li>
       <li>
-        <router-link style="color: #E4A813" to="/status">
+        <router-link style="color: #E4A813" to="/pages/status">
           广播
         </router-link>
       </li>
       <li>
-        <router-link style="color: #2AB8CC" to="/group">
+        <router-link style="color: #2AB8CC" to="/pages/group">
           小组
         </router-link>
       </li>
     </ul>
-    <span class="search"></span>
+    <span class="search" @click="showSearch"></span>
   </div>
 
 </template>
@@ -34,24 +34,17 @@
       data () {
         return {
         }
+      },
+      methods: {
+        showSearch: function () {
+          this.$emit('showSearch')
+        }
       }
     };
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
   .header-bar {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 9999;
-    display: flex;
-    align-items: center;
-    height: 4.8rem;
-    padding: 0 1.8rem;
-    background: #fff;
-    border-bottom: 1px solid #f3f3f3;
-
     .title {
       flex: 1;
       max-width: 4.6rem;

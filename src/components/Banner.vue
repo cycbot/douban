@@ -1,7 +1,10 @@
 <template>
   <div class="banner">
-    <div class="banner-bg">
+    <div class="banner-bg" v-if="!isAd">
       <img src="../assets/promotion_bg.jpg">
+    </div>
+    <div class="baner-bg ad" v-if="isAd">
+      <img :src="adImg" alt="ad">
     </div>
     <div class="content">
       <span class="title">{{title}}</span>
@@ -16,9 +19,23 @@
 <script>
   export default {
     name: 'banner',
+    props: {
+      title: {
+        type: String,
+        default: '打开App, 回复话题'
+      },
+      noContent: {
+        default: true
+      },
+      isAd: {
+        default: false
+      },
+      adImg: {
+        default: ''
+      }
+    },
     data () {
       return {
-        title: '打开App, 回复广播'
       }
     }
   };
@@ -33,7 +50,6 @@
   img {
     max-width: 100%;
   }
-
   .banner-bg {
     position: absolute;
   }
@@ -46,7 +62,6 @@
     justify-content: space-between;
     align-items: center;
   }
-
   .title {
     padding-left: 1.8rem;
     font-size: 1.4rem;
