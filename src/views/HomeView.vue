@@ -2,18 +2,38 @@
   <div class="home-view has-header">
     <sub-nav quickNav="ok"></sub-nav>
     <list :items="events"></list>
+    <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading"></infinite-loading>
   </div>
 </template>
 
 <script>
+  import InfiniteLoading from 'vue-infinite-loading'
   import SubNav from '../components/SubNav.vue'
   import List from '../components/List.vue'
   export default {
     name: 'home-view',
-    components: { SubNav, List },
+    components: { SubNav, List, InfiniteLoading },
     data () {
       return {
-        events: []
+        events: [],
+        temp: [],
+        skip: 5
+      }
+    },
+    methods: {
+      onInfinite () {
+        setTimeout(() => {
+          this.loadMore()
+          this.events = this.events.concat(this.temp)
+          this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded')
+        }, 1000)
+      },
+      loadMore () {
+        this.$http.jsonp('https://api.douban.com/v2/event/list?loc=108288&start=5&count=5')
+          .then(res => {
+            this.skip *= 2
+            this.temp = res.body.events
+          })
       }
     },
     beforeMount () {
