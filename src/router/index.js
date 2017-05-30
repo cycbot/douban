@@ -8,7 +8,7 @@ import PagesView from '../views/PagesView.vue'
 import SubjectView from '../views/SubjectView.vue'
 import HomeView from '../views/HomeView.vue'
 import DetailView from '../views/DetailView.vue'
-import Vuex from 'vuex'
+
 
 
 Vue.use(Router)
@@ -58,16 +58,16 @@ export default new Router({
           path: 'detail/:id',
           name: 'DetailView',
           component: DetailView
-        },
-        {
-          path: '/pages/:classify/subject/:id',
-          name: 'SubjectView',
-          components: {
-            default: PagesView,
-            subject: SubjectView
-          }
         }
       ]
+    },
+    {
+      path: '/pages/:classify/subject/:id',
+      name: 'SubjectView',
+      components: {
+        default: PagesView,
+        subject: SubjectView
+      }
     }
   ]
 })
