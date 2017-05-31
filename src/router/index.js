@@ -8,7 +8,7 @@ import PagesView from '../views/PagesView.vue'
 import SubjectView from '../views/SubjectView.vue'
 import HomeView from '../views/HomeView.vue'
 import DetailView from '../views/DetailView.vue'
-
+import SearchView from '../views/SearchView.vue'
 
 
 Vue.use(Router)
@@ -66,6 +66,14 @@ export default new Router({
       components: {
         default: PagesView,
         subject: SubjectView
+      }
+    },
+    {
+      path: '/search',
+      name: 'SearchView',
+      components: {
+        default: PagesView,
+        search: SearchView
       }
     },
     {

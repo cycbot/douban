@@ -1,9 +1,13 @@
 <template>
-  <div class="search-view">
+  <div class="talion-view">
     <div class="header-bar">
-      <span class="close-search" @click="closeSearch">关闭</span>
-      <form action="/" method="get" class="search">
-        <input type="search" name="query" value="">
+      <span class="close-talion" @click="closeTalion">关闭</span>
+      <form class="search" onsubmit="return false">
+        <input
+          type="search"
+          name="query"
+          v-model.trim.lazy="queryStr"
+          @keyup.enter="goSearch()">
       </form>
     </div>
     <ul class="has-header">
@@ -75,23 +79,32 @@
 <script>
     import SubNav from '../components/SubNav.vue'
     export default {
-      name: 'search-view',
+      name: 'talion-view',
       components: { SubNav },
       data () {
         return {
-
+          queryStr: ''
         }
       },
       methods: {
-        closeSearch: function () {
-          this.$emit('closeSearch')
+        closeTalion: function () {
+          this.$emit('closeTalion')
+        },
+        goSearch: function () {
+          this.$emit('closeTalion')
+          this.$router.push({
+            name: 'SearchView',
+            params: {
+              q: this.queryStr
+            }
+          })
         }
       }
     };
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
-  .search-view {
+  .talion-view {
     position: fixed;
     top: 0;
     width: 100%;
@@ -100,7 +113,7 @@
     z-index: 9999;
   }
 
-  .close-search {
+  .close-talion {
     color: #43bd56;
     font-size: 1.6rem;
   }

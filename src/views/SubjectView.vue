@@ -39,7 +39,7 @@
       <div class="subject-intro">
         <h2>{{subject.title}}的简介</h2>
         <p>
-          <template v-if="subject.summary">
+          <template v-if="subject.summary && subject.summary">
             {{isExpand ? summary : subject.summary}}……
           </template>
           <a href="javascript:;" v-show="isExpand" @click="expand">(展开)</a>
