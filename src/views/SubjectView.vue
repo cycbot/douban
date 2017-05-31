@@ -13,13 +13,13 @@
           <rating :rating="subject.rating">
             <span slot="ratingsCount">{{subject.rating.numRaters}}人评价</span>
           </rating>
-          <template v-if="movieMeta">
+          <template v-if="subject.genres">
             <p class="meta">{{movieMeta}}</p>
             <a href="#" class="open-app">
               用App查看影人资料
             </a>
           </template>
-          <template v-if="bookMeta">
+          <template v-if="subject.author">
             <p class="meta">{{bookMeta}}</p>
             <a href="#" class="buy">
               在豆瓣购买
@@ -37,13 +37,20 @@
       </div>
       <subject-mark></subject-mark>
       <div class="subject-intro">
-        <h2>{{subject.title}}的剧情简介</h2>
+        <h2>{{subject.title}}的简介</h2>
         <p>
-          {{isExpand ? summary : subject.summary}}……
+          <template v-if="subject.summary">
+            {{isExpand ? summary : subject.summary}}……
+          </template>
           <a href="javascript:;" v-show="isExpand" @click="expand">(展开)</a>
         </p>
       </div>
-      <tags noTitle="false"></tags>
+      <div class="genres">
+        <h2>查看更多分类</h2>
+        <template v-if="genres">
+          <tags :items="genres"></tags>
+        </template>
+      </div>
       <div class="subject-pics">
         <h2>{{subject.title}}的图片</h2>
         <ul v-if="subject.images">
@@ -68,8 +75,8 @@
     <div class="subject-comments">
       <h2>{{subject.title}}的短评</h2>
       <div class="content-list">
-        <card v-for="item in items" :key="item"></card>
-        <a href="#" class="list-link">显示更多评论</a>
+        <card mold="comment" v-for="item in items" :key="item"></card>
+        <a href="javascript:;" class="list-link">显示更多评论</a>
       </div>
     </div>
     <div class="ad">
@@ -77,45 +84,8 @@
     </div>
     <div class="subject-question">
       <h2>关于{{subject.title}}的问答</h2>
-      <ul class="list">
-        <li>
-          <a href="#">
-            <h3>为什么大家对国产片这么苛刻？</h3>
-            <div class="info">35回答</div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <h3>为什么大家对国产片这么苛刻？</h3>
-            <div class="info">35回答</div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <h3>为什么大家对国产片这么苛刻？</h3>
-            <div class="info">35回答</div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <h3>为什么大家对国产片这么苛刻？</h3>
-            <div class="info">35回答</div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <h3>为什么大家对国产片这么苛刻？</h3>
-            <div class="info">35回答</div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <h3>为什么大家对国产片这么苛刻？</h3>
-            <div class="info">35回答</div>
-          </a>
-        </li>
-        <a href="#" class="list-link">查看全部问答</a>
-      </ul>
+      <list :items="questions"></list>
+      <a href="javascript:;" class="list-link">显示更多问答</a>
     </div>
     <scroller title="推荐的豆列" type="onlyString" :item="tags"></scroller>
     <download-app></download-app>
@@ -129,11 +99,12 @@
   import DownloadApp from '../components/DownloadApp.vue'
   import Tags from '../components/Tags.vue'
   import Rating from '../components/Rating.vue'
+  import List from '../components/List.vue'
   import subjectMark from '../components/SubjectMark.vue'
 
   export default {
     name: 'subject-view',
-    components: { Banner, Card, Scroller, DownloadApp, Tags, Rating, subjectMark},
+    components: { Banner, Card, List, Scroller, DownloadApp, Tags, Rating, subjectMark},
     data () {
       return {
         bannerTitle: '聊聊你的观影感受',
@@ -141,6 +112,24 @@
         isExpand: true,
         items: new Array(5),
         adImgUrl: 'http://img.hb.aicdn.com/c1dd2a72fa6412bd455868be68ca402cf9f94b84e688-WMTPtp_fw658',
+        questions: [
+          {
+            title: '大家为什么对国产片这么苛刻？',
+            comments: '35回答'
+          },
+          {
+            title: '大家为什么对国产片这么苛刻？',
+            comments: '35回答'
+          },
+          {
+            title: '大家为什么对国产片这么苛刻？',
+            comments: '35回答'
+          },
+          {
+            title: '大家为什么对国产片这么苛刻？',
+            comments: '35回答'
+          }
+        ],
         tags: [
           {
             title: '同时入选IMDB250和豆瓣电影250的电影',
@@ -173,12 +162,15 @@
         if (!this.subject.author) return ''
         return this.subject.author.join(' / ') +
                this.subject.translator.join(' / ') + ' / ' +
-               this.subject.puublisher + ' / ' +
+               this.subject.publisher + ' / ' +
                this.subject.binding + ' / ' + this.subject.pubdate
       },
       summary: function () {
         if (!this.subject.summary) return ''
         return this.subject.summary.slice(0, 120)
+      },
+      genres: function () {
+        return this.subject.tags ? this.subject.tags : this.subject.genres
       }
     },
     methods: {
@@ -315,15 +307,16 @@
     }
   }
 
-  .subject-intro, .tags, .subject-pics, .subject-comments,
+  .subject-intro, .genres, .subject-pics, .subject-comments,
   .ad, .subject-question {
     margin-bottom: 3rem;
 
-    h2 {
-      margin: 0 0 1.5rem;
-      font-size: 1.5rem;
-      color: #aaa;
-    }
+  }
+
+  h2 {
+    margin: 0 0 1.5rem;
+    font-size: 1.5rem;
+    color: #aaa;
   }
 
   .subject-intro {
@@ -377,8 +370,8 @@
     }
   }
 
-  .subject-comments h2, .subject-comments .list-link, .subject-question {
-    margin: 0 1.8rem;
+  .subject-comments h2,  .subject-question {
+    padding: 0 1.8rem;
   }
 
   .subject-comments, .subject-question {
@@ -397,20 +390,5 @@
     margin-top: -2rem;
   }
 
-  .subject-question {
-    h3 {
-      padding: 0;
-      line-height: 1.41;
-      font-size: 1.7rem;
-      font-weight: 500;
-      color: #494949;
-    }
-
-    .info {
-      margin-top: 0.5rem;
-      font-size: 1.4rem;
-      color: #42bd56;
-    }
-  }
 
 </style>

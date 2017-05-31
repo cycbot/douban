@@ -1,7 +1,7 @@
 <template>
   <div class="list">
-   <template v-for="item in items">
-     <router-link class="item" :to="{name: 'DetailView', params: { id: item.id }}">
+   <template v-if="mold === 'thumbnail'" v-for="item in items">
+     <router-link class="thumbnail" :to="{name: 'DetailView', params: { id: item.id }}">
        <div class="content">
          <img :src="item.image_hlarge" alt="cover">
          <h3>{{item.title}}</h3>
@@ -15,6 +15,16 @@
        </div>
      </router-link>
    </template>
+    <template v-if="mold === 'basic'">
+      <ul class="basic">
+        <li v-for="item in items">
+          <a href="#">
+            <h3>{{item.title}}</h3>
+            <div class="info">{{item.comments}}</div>
+          </a>
+        </li>
+      </ul>
+    </template>
   </div>
 </template>
 
@@ -22,7 +32,15 @@
 
   export default {
     name: 'list',
-    props: ['items'],
+    props: {
+      mold: {
+        type: String,
+        default: 'basic'
+      },
+      items: {
+        type: Array
+      }
+    },
     data () {
       return {
 
@@ -39,7 +57,7 @@
 
 <style lang="scss" rel="stylesheet/scss" scoped>
   .list {
-    .item {
+    .thumbnail {
       position: relative;
       display: block;
       padding: 2.5rem 1.8rem 2.5rem 0;
@@ -87,7 +105,7 @@
       }
     }
 
-    .item ~ .item::before {
+    .thumbnail~ .thumbnail::before {
       position: absolute;
       left: 0;
       top: 0;
@@ -97,5 +115,20 @@
       background: #e3e3e3;
     }
 
+    .basic {
+      h3 {
+        padding: 0;
+        line-height: 1.41;
+        font-size: 1.7rem;
+        font-weight: 500;
+        color: #494949;
+      }
+
+      .info {
+        margin-top: 0.5rem;
+        font-size: 1.4rem;
+        color: #42bd56;
+      }
+    }
   }
 </style>
