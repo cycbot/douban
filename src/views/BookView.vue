@@ -12,13 +12,14 @@
         </div>
       </div>
     </scroller>
-    <scroller title="发现好书" type="onlyString"></scroller>
+    <scroller title="发现好书" type="onlyString" :items="bookTags"></scroller>
     <types></types>
     <download-app></download-app>
   </div>
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   import Scroller from '../components/Scroller.vue'
   import Types from '../components/Types.vue'
   import DownloadApp from '../components/DownloadApp.vue'
@@ -31,24 +32,24 @@
     },
     data () {
       return {
-        novel: [],
-        reality: [],
-        travel: []
+
       }
     },
-    beforeMount () {
-      this.$http.jsonp('https://api.douban.com/v2/book/search?q=虚构类&count=8')
-        .then(res => {
-           this.novel = res.body.books
-        })
-      this.$http.jsonp('https://api.douban.com/v2/book/search?q=非虚构类&count=8')
-        .then(res => {
-          this.reality = res.body.books
-        })
-      this.$http.jsonp('https://api.douban.com/v2/book/search?q=旅行&count=8')
-        .then(res => {
-          this.travel = res.body.books
-        })
+    computed: {
+      ...mapState({
+        novel: state => state.book.novel,
+        reality: state => state.book.reality,
+        travel: state => state.book.travel,
+        bookTags: state => state.book.bookTags,
+      })
+    },
+    methods: {
+      getBook: function () {
+        this.$store.dispatch('getBook')
+      }
+    },
+    created () {
+        this.getBook()
     }
   };
 </script>

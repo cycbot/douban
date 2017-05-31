@@ -13,14 +13,14 @@
           <rating :rating="subject.rating">
             <span slot="ratingsCount">{{subject.rating.numRaters}}人评价</span>
           </rating>
-          <template v-if="subject.genres">
-            <p class="meta">{{movieMeta}}</p>
+          <template v-if="subject.genres && subjectMeta">
+            <p class="meta">{{subjectMeta}}</p>
             <a href="#" class="open-app">
               用App查看影人资料
             </a>
           </template>
-          <template v-if="subject.author">
-            <p class="meta">{{bookMeta}}</p>
+          <template v-if="subject.author && subjectMeta">
+            <p class="meta">{{subjectMeta}}</p>
             <a href="#" class="buy">
               在豆瓣购买
             </a>
@@ -87,12 +87,13 @@
       <list :items="questions"></list>
       <a href="javascript:;" class="list-link">显示更多问答</a>
     </div>
-    <scroller title="推荐的豆列" type="onlyString" :item="tags"></scroller>
+    <scroller title="推荐的豆列" type="onlyString" :item="movieTags"></scroller>
     <download-app></download-app>
   </div>
 </template>
 
 <script>
+  import { mapState, mapGetters } from 'vuex'
   import Banner from '../components/Banner.vue'
   import Card from '../components/Card.vue'
   import Scroller from '../components/Scroller.vue'
@@ -107,71 +108,23 @@
     components: { Banner, Card, List, Scroller, DownloadApp, Tags, Rating, subjectMark},
     data () {
       return {
-        bannerTitle: '聊聊你的观影感受',
-        subject: {},
         isExpand: true,
-        items: new Array(5),
-        adImgUrl: 'http://img.hb.aicdn.com/c1dd2a72fa6412bd455868be68ca402cf9f94b84e688-WMTPtp_fw658',
-        questions: [
-          {
-            title: '大家为什么对国产片这么苛刻？',
-            comments: '35回答'
-          },
-          {
-            title: '大家为什么对国产片这么苛刻？',
-            comments: '35回答'
-          },
-          {
-            title: '大家为什么对国产片这么苛刻？',
-            comments: '35回答'
-          },
-          {
-            title: '大家为什么对国产片这么苛刻？',
-            comments: '35回答'
-          }
-        ],
-        tags: [
-          {
-            title: '同时入选IMDB250和豆瓣电影250的电影',
-            href: 'https://m.douban.com/doulist/968362/',
-            color: '#FFAC2D'
-          },
-          {
-            title: '同时入选IMDB250和豆瓣电影250的电影',
-            href: 'https://m.douban.com/doulist/968362/',
-            color: '#FFAC2D'
-          },
-          {
-            title: '同时入选IMDB250和豆瓣电影250的电影',
-            href: 'https://m.douban.com/doulist/968362/',
-            color: '#FFAC2D'
-          },
-
-        ]
+        items: new Array(5)
       }
     },
     computed: {
-      movieMeta: function () {
-        if (!this.subject.genres) return ''
-        return this.subject.year + this.subject.genres.join(' / ') +
-               this.subject.casts.map(item => item.name).join(' / ') +
-               this.subject.directors.map(item => item.name).join(' / ') +
-               ' / ' + this.subject.countries.join(' / ')
-      },
-      bookMeta: function () {
-        if (!this.subject.author) return ''
-        return this.subject.author.join(' / ') +
-               this.subject.translator.join(' / ') + ' / ' +
-               this.subject.publisher + ' / ' +
-               this.subject.binding + ' / ' + this.subject.pubdate
-      },
-      summary: function () {
-        if (!this.subject.summary) return ''
-        return this.subject.summary.slice(0, 120)
-      },
-      genres: function () {
-        return this.subject.tags ? this.subject.tags : this.subject.genres
-      }
+      ...mapState({
+        bannerTitle: state => state.subject.bannerTitle,
+        subject: state => state.subject.subject,
+        adImgUrl:state => state.subject.adImgUrl,
+        questions: state => state.subject.questions,
+        movieTags: state => state.movie.movieTags
+      }),
+      ...mapGetters({
+        subjectMeta: 'subjectMeta',
+        summary: 'summary',
+        genres: 'genres'
+      })
     },
     methods: {
       expand: function (event) {
@@ -181,25 +134,11 @@
     beforeMount () {
       const id = this.$route.params.id
       const classify = this.$route.params.classify
-      switch (classify) {
-        case 'movie':
-          this.$http.jsonp('https://api.douban.com/v2/' + classify + '/' + id)
-            .then(res => {
-              console.log(res.body)
-              this.subject = res.body
-            })
-            break
-        case 'book':
-          this.$http.jsonp('https://api.douban.com/v2/' + classify + '/' + id)
-            .then(res => {
-              console.log(res.body)
-              this.subject = res.body
-            })
-          break
-        default:
-          console.log('蛤')
-      }
-
+      this.$store.dispatch({
+        type: 'getSingleSubject',
+        id: id,
+        classify: classify
+      })
     }
   };
 </script>

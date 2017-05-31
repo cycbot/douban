@@ -38,7 +38,8 @@
         default: 'basic'
       },
       items: {
-        type: Array
+        type: Array,
+        required: true
       }
     },
     data () {

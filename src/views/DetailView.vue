@@ -3,48 +3,48 @@
     <banner :title="bannerTitle"></banner>
     <div class="info">
       <h2>
-        {{item.title}}
-        <span class="badge">{{item.loc_name}}</span>
+        {{eventItem.title}}
+        <span class="badge">{{eventItem.loc_name}}</span>
       </h2>
       <div class="poster">
-        <img :src="item.image_hlarge">
+        <img :src="eventItem.image_hlarge">
       </div>
       <div class="detail">
         <span>时间:&nbsp;&nbsp;</span>
         <ul>
-          <li>{{item.begin_time}}</li>
-          <li>{{item.end_time}}</li>
+          <li>{{eventItem.begin_time}}</li>
+          <li>{{eventItem.end_time}}</li>
         </ul>
       </div>
       <div class="detail">
         <span>地点:&nbsp;&nbsp;</span>
         <ul>
-          <li>{{item.address}}</li>
+          <li>{{eventItem.address}}</li>
         </ul>
       </div>
       <div class="detail">
         <span>费用:&nbsp;&nbsp;</span>
         <ul>
-          <li>{{item.fee_str}}</li>
+          <li>{{eventItem.fee_str}}</li>
         </ul>
       </div>
       <div class="detail">
         <span>类型:&nbsp;&nbsp;</span>
         <ul>
-          <li>{{item.category_name}}</li>
+          <li>{{eventItem.category_name}}</li>
         </ul>
       </div>
       <div class="detail">
         <span>主办方:&nbsp;&nbsp;</span>
         <ul>
-          <li>{{item.owner | getName}}</li>
+          <li v-if="eventItem.owner">{{eventItem.owner.name}}</li>
         </ul>
       </div>
-      <tags :items="item.tag | toArray"></tags>
+      <tags v-if="eventItem.tags" :items="eventItem.tag | toArray"></tags>
 
       <div class="describe">
         <h2>活动详情</h2>
-        <div class="content" v-html="content"></div>
+        <div v-if="eventItem.content" class="content" v-html="content"></div>
       </div>
     </div>
     <download-app></download-app>
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   import Banner from '../components/Banner.vue'
   import Tags from '../components/Tags.vue'
   import DownloadApp from '../components/DownloadApp.vue'
@@ -60,34 +62,30 @@
     components: { Banner, Tags, DownloadApp },
     data () {
       return {
-        bannerTitle: '每天看点好内容',
-        item: {}
+
       }
     },
     filters: {
       toArray (value) {
         if (!value) return ''
-        value = value.toString()
         return value.split(',')
-      },
-      getName (value) {
-        if (!value) return '豆瓣'
-        return value.name
       }
     },
     computed: {
       content: function () {
-        if (!this.item.content) return ''
-        return this.item.content.replace(/<img.+?>/ig, '')
-      }
+        return this.eventItem.content.replace(/<img.+?>/ig, '')
+      },
+      ...mapState({
+        bannerTitle: state => state.activities.bannerTitle,
+        eventItem: state => state.activities.eventItem
+      })
     },
     beforeMount () {
       const id = this.$route.params.id
-      this.$http.jsonp('https://api.douban.com/v2/event/' + id)
-                .then(res => {
-                    console.log(res.body)
-                    this.item = res.body
-                })
+      this.$store.dispatch({
+        type: 'getSingleEvent',
+        id: id
+      })
     }
   };
 </script>
