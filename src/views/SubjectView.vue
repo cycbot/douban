@@ -10,7 +10,9 @@
           </a>
         </div>
         <div class="left">
-          <rating :average="subject.rating | isExist" :ratingsCount="subject.rating.numRaters"></rating>
+          <rating :rating="subject.rating">
+            <span slot="ratingsCount">{{subject.rating.numRaters}}人评价</span>
+          </rating>
           <p class="meta">{{movieMeta}}</p>
           <a href="#" class="open-app">
             用App查看影人资料
@@ -167,10 +169,6 @@
       isImg: function (value) {
         if (!value) return ''
         return value.large
-      },
-      isExist: function (value) {
-        if (!value) return ''
-        return value.average
       }
     },
     beforeMount () {
@@ -212,6 +210,10 @@
 
     .left {
       margin-right: 10rem;
+
+      .rating {
+        display: inline-block;
+      }
 
       .meta {
         margin-top: 1.5rem;
