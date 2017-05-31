@@ -20,37 +20,12 @@
       return {
         hotMovies: [],
         newMovies: [],
-        topMovies: [],
-        tags: [
-          {
-            title: '同时入选IMDB250和豆瓣电影250的电影',
-            href: 'https://m.douban.com/doulist/968362',
-            color: '#FFAC2D'
-          },
-          {
-            title: '带你进入不正常的世界',
-            href: 'https://m.douban.com/doulist/16002',
-            color: '#FF4055'
-          },
-          {
-            line: true
-          },
-          {
-            title: '科幻是未来的钥匙——科幻启示录【科幻题材】',
-            href: 'https://m.douban.com/doulist/968362',
-            color: '#2384E8'
-          },
-          {
-            title: '美国生活面面观',
-            href: 'https://m.douban.com/doulist/121326',
-            color: '#3BA94D'
-          },
-          {
-            title: '2015终极期待',
-            href: 'https://m.douban.com/doulist/37479562',
-            color: '#CC3344'
-          },
-        ]
+        topMovies: []
+      }
+    },
+    computed: {
+      tags: function () {
+        return this.$store.state.movieTags
       }
     },
     beforeMount () {
