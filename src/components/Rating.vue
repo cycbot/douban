@@ -26,7 +26,7 @@
         gray: 0
       }
     },
-    beforeUpdate () {
+    created () {
       let average = this.rating.average
       this.full = parseInt(average / 2)
       this.half = average % 2 === 0 ? 0 : 1

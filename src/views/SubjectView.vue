@@ -6,23 +6,36 @@
       <div class="subject-info">
         <div class="right">
           <a href="#">
-            <img :src="subject.images | isImg">
+            <img v-if="subject.images" :src="subject.images.large" alt="cover">
           </a>
         </div>
-        <div class="left">
+        <div class="left" v-if="subject.rating">
           <rating :rating="subject.rating">
             <span slot="ratingsCount">{{subject.rating.numRaters}}人评价</span>
           </rating>
-          <p class="meta">{{movieMeta}}</p>
-          <a href="#" class="open-app">
-            用App查看影人资料
-          </a>
+          <template v-if="movieMeta">
+            <p class="meta">{{movieMeta}}</p>
+            <a href="#" class="open-app">
+              用App查看影人资料
+            </a>
+          </template>
+          <template v-if="bookMeta">
+            <p class="meta">{{bookMeta}}</p>
+            <a href="#" class="buy">
+              在豆瓣购买
+            </a>
+          </template>
         </div>
       </div>
-      <div class="subject-mark">
-        <a href="javascript:">想看</a>
-        <a href="javascript:">看过</a>
+      <div v-if="subject.author" class="vendors-link">
+        <a class="link">
+          在哪儿买这本书？
+          <span class="info">
+            豆瓣阅读电子书 66.00元起
+          </span>
+        </a>
       </div>
+      <subject-mark></subject-mark>
       <div class="subject-intro">
         <h2>{{subject.title}}的剧情简介</h2>
         <p>
@@ -33,20 +46,20 @@
       <tags noTitle="false"></tags>
       <div class="subject-pics">
         <h2>{{subject.title}}的图片</h2>
-        <ul>
+        <ul v-if="subject.images">
           <li class="pic">
             <a href="#">
-              <img :src="subject.images | isImg">
+              <img :src="subject.images.large">
             </a>
           </li>
           <li class="pic">
             <a href="#">
-              <img :src="subject.images | isImg">
+              <img :src="subject.images.large">
             </a>
           </li>
           <li class="pic">
             <a href="#">
-              <img :src="subject.images | isImg">
+              <img :src="subject.images.large">
             </a>
           </li>
         </ul>
@@ -116,10 +129,11 @@
   import DownloadApp from '../components/DownloadApp.vue'
   import Tags from '../components/Tags.vue'
   import Rating from '../components/Rating.vue'
+  import subjectMark from '../components/SubjectMark.vue'
 
   export default {
     name: 'subject-view',
-    components: { Banner, Card, Scroller, DownloadApp, Tags, Rating},
+    components: { Banner, Card, Scroller, DownloadApp, Tags, Rating, subjectMark},
     data () {
       return {
         bannerTitle: '聊聊你的观影感受',
@@ -155,6 +169,13 @@
                this.subject.directors.map(item => item.name).join(' / ') +
                ' / ' + this.subject.countries.join(' / ')
       },
+      bookMeta: function () {
+        if (!this.subject.author) return ''
+        return this.subject.author.join(' / ') +
+               this.subject.translator.join(' / ') + ' / ' +
+               this.subject.puublisher + ' / ' +
+               this.subject.binding + ' / ' + this.subject.pubdate
+      },
       summary: function () {
         if (!this.subject.summary) return ''
         return this.subject.summary.slice(0, 120)
@@ -165,20 +186,28 @@
         this.isExpand = false
       }
     },
-    filters: {
-      isImg: function (value) {
-        if (!value) return ''
-        return value.large
-      }
-    },
     beforeMount () {
       const id = this.$route.params.id
       const classify = this.$route.params.classify
-      this.$http.jsonp('https://api.douban.com/v2/' + classify + '/' + id)
-                .then(res => {
-                  console.log(res.body)
-                  this.subject = res.body
-                })
+      switch (classify) {
+        case 'movie':
+          this.$http.jsonp('https://api.douban.com/v2/' + classify + '/' + id)
+            .then(res => {
+              console.log(res.body)
+              this.subject = res.body
+            })
+            break
+        case 'book':
+          this.$http.jsonp('https://api.douban.com/v2/' + classify + '/' + id)
+            .then(res => {
+              console.log(res.body)
+              this.subject = res.body
+            })
+          break
+        default:
+          console.log('蛤')
+      }
+
     }
   };
 </script>
@@ -211,16 +240,24 @@
     .left {
       margin-right: 10rem;
 
-      .rating {
-        display: inline-block;
-      }
-
       .meta {
         margin-top: 1.5rem;
         padding-right: 2.4rem;
         line-height: 1.6;
         font-size: 1.4rem;
         color: #494949;
+      }
+
+      .buy {
+        display: inline-block;
+        height: 2.4rem;
+        padding: 0 0.6rem;
+        line-height: 2.4rem;
+        text-align: center;
+        font-size: 1.3rem;
+        color: #E76648;
+        border: 0.1rem solid #E76648;
+        border-radius: 0.3rem;
       }
 
       .open-app {
@@ -233,21 +270,48 @@
     }
   }
 
-  .subject-mark {
-    display: flex;
-    margin-bottom: 3rem;
+  .vendors-link {
+    position: relative;
+    margin: 1.5rem 0;
+    padding: 1rem 1.9rem 1rem 0;
+    line-height: 2.4rem;
+    font-size: 1.5rem;
+    overflow: auto;
+    box-sizing: border-box;
 
-    a {
-      display: block;
-      height: 3rem;
-      margin-right: 1rem;
-      line-height: 3rem;
-      font-size: 1.5rem;
-      text-align: center;
-      color: #ffb712;
-      border: 0.1rem solid #ffb712;
-      border-radius: 0.3rem;
-      flex: 1;
+    .link {
+      display: inline-block;
+      width: 100%;
+      position: relative;
+    }
+
+    .info {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: inline-block;
+      color: #ccc;
+      font-size: 1.4rem;
+    }
+
+    &::before {
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 1px;
+      background: #E8E8E8;
+      content: '';
+      position: absolute;
+    }
+
+    &::after {
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: #E8E8E8;
+      content: '';
+      position: absolute;
     }
   }
 
