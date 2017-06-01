@@ -24,6 +24,10 @@ npm run dev
 # build for production with minification
 npm run build
 
+
+***
+
+
 ## Features
 
 - Vue + vue-router + vuex + Superagent working together
@@ -35,6 +39,9 @@ npm run build
 - Real remote API and some mock data
 - Css with Sass
 - No third party CSS framework
+
+
+
 
 ## Libraries
 
