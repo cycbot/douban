@@ -10,6 +10,7 @@ import HomeView from '../views/HomeView.vue'
 import DetailView from '../views/DetailView.vue'
 import SearchView from '../views/SearchView.vue'
 import LoginView from '../views/LoginView.vue'
+import RegisterView from '../views/RegisterView.vue'
 
 
 Vue.use(Router)
@@ -81,6 +82,11 @@ export default new Router({
       path: '/login',
       name: 'LoginView',
       component: LoginView
+    },
+    {
+      path: '/register',
+      name: 'RegisterView',
+      component: RegisterView
     },
     {
       path: '*',
