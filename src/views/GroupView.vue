@@ -1,5 +1,6 @@
 <template>
   <div class="group">
+    <user-bar holder="登录参与讨论"></user-bar>
     <group title="租房找室友" :items="group_a">
       <a href="#" class="list-link" slot="more">更多相关小组</a>
     </group>
@@ -15,11 +16,12 @@
 
 <script>
   import { mapState } from 'vuex'
-  import Group from '../components/Group.vue'
-  import DownloadApp from '../components/DownloadApp.vue'
+  import UserBar from '../components/UserBar'
+  import Group from '../components/Group'
+  import DownloadApp from '../components/DownloadApp'
   export default {
     name: 'group-view',
-    components: { Group, DownloadApp},
+    components: { Group, DownloadApp, UserBar},
     data () {
       return {}
     },
@@ -45,5 +47,9 @@
     line-height: 1.8rem;
     text-align: center;
     color: #42bd56;
+  }
+
+  .user-bar {
+    margin-bottom: 1.5rem;
   }
 </style>

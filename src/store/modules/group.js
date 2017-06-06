@@ -30,6 +30,8 @@ const actions = {
     let dataA = [
       {
         title: '成都租房',
+        subtype: 'group',
+        id: 1234,
         images: {
           small: 'https://img3.doubanio.com/icon/g117205-2.jpg'
         },
@@ -41,6 +43,8 @@ const actions = {
       },
       {
         title: '北京租房（非中介）',
+        subtype: 'group',
+        id: 1234,
         images: {
           small: 'https://img3.doubanio.com/icon/g279962-3.jpg'
         },
@@ -52,6 +56,8 @@ const actions = {
       },
       {
         title: '深圳福田租房（个人房源免费推广）',
+        subtype: 'group',
+        id: 1234,
         images: {
           small: 'https://img3.doubanio.com/icon/g117205-2.jpg'
         },
@@ -65,6 +71,8 @@ const actions = {
     let dataB = [
       {
         title: '想不想很多人帮你！',
+        subtype: 'group',
+        id: 1234,
         images: {
           small: 'https://img1.doubanio.com/icon/g14859-17.jpg'
         },
@@ -76,6 +84,8 @@ const actions = {
       },
       {
         title: '我们都有秘密',
+        subtype: 'group',
+        id: 1234,
         images: {
           small: 'https://img5.doubanio.com/icon/g399184-6.jpg'
         },
@@ -87,6 +97,8 @@ const actions = {
       },
       {
         title: '文艺青年装逼会',
+        subtype: 'group',
+        id: 1234,
         images: {
           small: 'https://img1.doubanio.com/icon/g17947-8.jpg'
         },
@@ -100,6 +112,8 @@ const actions = {
     let dataC = [
       {
         title: '我爱代购&amp;海淘☺微信号',
+        subtype: 'group',
+        id: 1234,
         images: {
           small: 'https://img5.doubanio.com/icon/g37539-6.jpg'
         },
@@ -111,6 +125,8 @@ const actions = {
       },
       {
         title: 'PiaPia团✿团购',
+        subtype: 'group',
+        id: 1234,
         images: {
           small: 'https://img3.doubanio.com/icon/g573696-2.jpg'
         },
@@ -122,6 +138,8 @@ const actions = {
       },
       {
         title: '我们一起海淘',
+        subtype: 'group',
+        id: 1234,
         images: {
           small: 'https://img3.doubanio.com/icon/g25704-22.jpg'
         },

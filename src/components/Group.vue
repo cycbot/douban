@@ -6,8 +6,7 @@
     <ul class="content">
       <li v-for="item in items">
         <router-link
-          :to="{
-            name:'SubjectView',
+          :to="{name:'SubjectView',
             params: {classify: item.subtype ? item.subtype : 'book',
             id: item.id}}">
           <div class="group-meta">

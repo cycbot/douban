@@ -3,15 +3,16 @@
     <h1>
       <a href="javascript:history.go(-1);">取消</a>登录豆瓣
     </h1>
-    <form action="">
+    <form method="get" @submit.prevent="onSubmit()">
+      <p v-if="error" class="tip error">{{error}}</p>
       <div class="form-user">
         <label>
-          <strong>账号</strong>
+          <strong>邮箱</strong>
           <input
-            v-model="user"
-            type="text"
-            name="user"
-            placeholder="邮箱 / 手机号 / 用户名">
+            v-model="email"
+            type="email"
+            name="email"
+            placeholder="邮箱">
         </label>
       </div>
       <div class="form-pwd">
@@ -19,23 +20,29 @@
           <strong>请输入密码</strong>
           <template v-if="passType === 'password'">
             <input
-              v-model="password"
+              v-model="token"
               type="password"
-              name="password"
-              placeholder="密码">
+              name="token"
+              placeholder="Token">
           </template>
           <template v-if="passType === 'text'">
             <input
-              v-model="password"
-              name="password"
+              v-model="token"
+              name="token"
               type="text"
-              placeholder="密码">
+              placeholder="Token">
           </template>
-          <span class="showpwd" :class="{show: isShow}" @click="showpwd()"></span>
+          <span class="show-pwd" :class="{show: isShow}" @click="showPwd()"></span>
         </label>
       </div>
       <div class="">
-        <input type="text" class="submit" value="登录">
+        <button
+          type="submit"
+          class="submit"
+          :disabled="isDisabled"
+          :class="{disabled: isDisabled}">
+          {{loginState}}
+        </button>
       </div>
     </form>
     <div class="footer">
@@ -49,21 +56,60 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
   export default {
     name: 'login-view',
     data () {
       return {
+        loginState: '登录',
+        isDisabled: false,
         isShow: 0,
         passType: 'password',
-        user: '',
-        password: ''
+        error: ''
       }
     },
+    computed: {
+      ...mapState({
+        email: state => state.user.login_email,
+        token: state => state.user.login_token,
+        name: state => state.user.login_name
+      })
+    },
     methods: {
-      showpwd () {
+      showPwd () {
         this.isShow = this.isShow ? 0 : 1
         this.isShow ? this.passType = 'text' : this.passType = 'password'
+      },
+      beforeSubmit () {
+        this.isDisabled = true
+        this.loginState = '正在登录...'
+      },
+      onSuccess (res) {
+        this.$router.push({name: 'HomeView'})
+      },
+      onError () {
+        this.error = err.body.error
+        this.loginState = '登录'
+        this.isDisabled = false
+      },
+      onSubmit () {
+        this.beforeSubmit()
+
+        this.$state.dispatch({
+          type: 'login',
+          email: this.email,
+          token: this.token
+        }).then(res => {
+          this.onSuccess(res)
+        }, err => {
+          this.onError(err)
+        })
       }
+    },
+    created () {
+     this.$store.commit({
+       type: 'getLocalUser'
+     })
     }
   };
 </script>
@@ -101,7 +147,7 @@
         margin-bottom: 0.5rem;
       }
 
-      input[type="text"], input[type="password"] {
+      input[type="email"], input[type="password"], input[type=""] {
         display: inline-block;
         width: 100%;
         height: 4.4rem;
@@ -119,10 +165,11 @@
         position: relative;
 
         input {
+          padding-right: 4rem;
           border-top: 0;
         }
 
-        .showpwd {
+        .show-pwd {
           position: absolute;
           right: 0.2rem;
           top: 0;
@@ -136,7 +183,7 @@
           z-index: 3;
         }
 
-        .showpwd.show {
+        .show-pwd.show {
           background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAYAAAAehFoBAAAABGdBTUEAALGPC/xhBQAABHBJREFUWAntmEloFEEUhpOZzJBoFCeT/WCMnvRg3IgSPLjhyRWiKAp6EImQRHMQRFFBXFExLrij6CGIcYsePehBg0tAhKi4I5hJQlzDKDFhEr/XpIbOTPd0d4wbdEHxqt7733t/v66uqpmkJLe5FXAr4FbArcDfrEDyryTv6enxNjc3FyFLkpOTS4g1knEQGWSejvxC/9jbn6Cr93q99dnZ2S/R9av1i3Bra2tRd3f3KvoysgacZob4W/pZv99/NhgMvnfi74gw1ZxGBXfTJztJYoaFdARbXUpKyga7VbdFmIqOikQieyG60Cz5r+gh3oX/kbS0tG2BQECWkWmzJNzU1LSUgKcgO9g0ygAZyPOOUKX5+fkNZiE9ZgYI+lgCh7DX/AmywoM8BfQ7oVBotRkvwwrjlALZS8j5Zo4m+kdU6TJ+jR6PR15tNmNZ76XIAhMfQzVxNlPp7bHGOMIE9vKENQAXx4ITzENsV2W5ubk3jDDElLe1BrkHe6oRxkjHQ6/Py8vbp7fFEYbsMQKX6UGJxlTimc/nm5mVldWcCCc2SBcT+yZ9qBVW2SG9EtLn1LwPYQKWsrfWKqOVhGw7lZ2Qk5PzWmF7Sc2GVCH2Rux12N8oe0tLy1x2nOtqbiWJ8Y2CTKQgzwUbJUxlh5PkMbphVkGUnWCbWGc7ZY6vBzLVyHJ6NC6Y75jXgTul/Nh5ZOnMUXMb8hH+U4jVqd8lDuLohGwkPT39hEoG2SreToWerNiYD0IcpyBTFZbER9TYphyPf5VgtUqQbDKv6Z5NZw1G0vvy1DKBlNwpviDl/mDYwN8CP0OM4Pzgw0ifIdhY+ZmDpVCrMGR3GGPMtSR7p6ychGMSke3FTQKj5ZNXy7hF+duUgY6OjvX6JWHTzxDWY6iNV9rFxXv2ajTCbB0bTREmBqoUPQjYBZ4xD5tAlboBjEaY6voZ5yqDTfkpNTV1r0aYfe4BAa7ZdFSwSe3t7XL3TcJXbl1blSFWYu9Gt0XpWb/TIe1k/YrrnoyMjK/6JbEWpRynthoJveFwOHrA8NDVvKnDkOvz2pnLtlbGB3dHBca3XI1tStnWqgUb3S9lwpMP2MFBuBF0uVPUcWS/Zaw1dqR5fOR1am4leWA5OCZwcLwQbB/ComC/O0oF1sjYTiOgHM2zCBiywsv2yV4tR/MQK6yy88AreHvno3M1UBJjBeOLam4lST66s7PzIWTmmmHB+ChEJZW97ZCsXH6iZCV+XIVFSVC5XtYiF8jcQZPr5RXwjUj5HuR6WYxchBzuII58yPaulyooCXxUbb8ct0r3h+QPyFbykZ00ymdYYT0Q0ksgfZoH+Ld/IinSfOEXuCIW8dRXlW6gJbG76Ae4K4yjsg2J4ltWWO/Mup5GtXeh0y49elt/xpD8PT/zY8lw2RkLcfkjZTm2QKzdag5R2ZfPyB8pmZmZTVZ4vd1RhfWOMmZde9va2sayXZUwlr+qRiGN/qr6gO0pROWvqrv8afJK/N3mVsCtgFsBtwL/XwV+As2W8ubaOJDiAAAAAElFTkSuQmCC);
         }
       }
@@ -152,6 +199,21 @@
         background: #17AA52;
         border-radius: 0.3rem;
       }
+
+      .disabled {
+        cursor: not-allowed;
+        background: #eee;
+        border: none;
+      }
+
+      .tip {
+        font-size: 1.4rem;
+        color: #aaa;
+      }
+
+      .error {
+        color: #ff0000;
+      }
     }
 
     .footer {
@@ -162,9 +224,9 @@
       }
 
       .btns {
-        margin-top: 40px;
+        margin-top: 4rem;
         text-align: center;
-        font-size: 15px;
+        font-size: 1.5rem;
 
         a {
           color: #42bd56;
