@@ -27,7 +27,7 @@
         <p v-if="error" class="tip error">{{error}}</p>
         <div class="form-alias">
           <label>
-            <strong>账号</strong>
+            <strong>邮箱</strong>
             <input
               v-model.trim="email"
               type="text"
@@ -130,6 +130,15 @@
           this.onSuccess(res)
         }, err => {
           this.onError(err)
+        })
+      },
+      beforeRouterEnter (to, from, next) {
+        next(vm => {
+          if (vm.$store.getters.currentUser.email) {
+            vm.$router.push({name: 'StatusView'})
+          } else {
+            next()
+          }
         })
       }
     }

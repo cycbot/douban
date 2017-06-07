@@ -12,6 +12,7 @@
             v-model="email"
             type="email"
             name="email"
+            @input="updateData"
             placeholder="邮箱">
         </label>
       </div>
@@ -23,6 +24,7 @@
               v-model="token"
               type="password"
               name="token"
+              @input="updateData"
               placeholder="Token">
           </template>
           <template v-if="passType === 'text'">
@@ -30,6 +32,7 @@
               v-model="token"
               name="token"
               type="text"
+              @input="updateData"
               placeholder="Token">
           </template>
           <span class="show-pwd" :class="{show: isShow}" @click="showPwd()"></span>
@@ -70,9 +73,8 @@
     },
     computed: {
       ...mapState({
-        email: state => state.user.login_email,
-        token: state => state.user.login_token,
-        name: state => state.user.login_name
+        email: state => state.user.temp_email,
+        token: state => state.user.temp_token
       })
     },
     methods: {
@@ -80,12 +82,19 @@
         this.isShow = this.isShow ? 0 : 1
         this.isShow ? this.passType = 'text' : this.passType = 'password'
       },
+      updateData (e) {
+        this.$store.commit({
+          type: 'updateData',
+          name: e.target.name,
+          value: e.target.value
+        })
+      },
       beforeSubmit () {
         this.isDisabled = true
         this.loginState = '正在登录...'
       },
       onSuccess (res) {
-        this.$router.push({name: 'HomeView'})
+        this.$router.push({name: 'StatusView'})
       },
       onError () {
         this.error = err.body.error
@@ -104,12 +113,23 @@
         }, err => {
           this.onError(err)
         })
+      },
+      beforeRouteError (to, from, next) {
+        next(vm => {
+          if (vm.$store.getters.currentUser.email) {
+            vm.$router.push({name: 'StatusView'})
+          } else {
+            next()
+          }
+        })
       }
     },
     created () {
-     this.$store.commit({
-       type: 'getLocalUser'
-     })
+      if (localStorage.getItem('email')) {
+        this.$store.commit({
+          type: 'getLocalUser'
+        })
+      }
     }
   };
 </script>
@@ -139,7 +159,6 @@
 
     form {
       padding: 2rem 1.5rem;
-
       strong {
         font-size: 1.5rem;
         color: #222;

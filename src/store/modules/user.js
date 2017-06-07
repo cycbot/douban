@@ -6,14 +6,50 @@ import Vue from 'vue'
 const state = {
   login_email: '',
   login_token: '',
-  login_name: ''
+  login_name: '',
+  temp_email: '',
+  temp_token: '',
+  temp_name: ''
+}
+
+const getters = {
+  currentUser: state => {
+    return {
+      email: state.login_email,
+      token: state.login_token,
+      name: state.login_name
+    }
+  }
 }
 
 const mutations = {
+  updateData (state, payload) {
+    switch (payload.name) {
+      case 'email':
+        state.temp_email = payload.value
+        break
+      case 'token':
+        state.temp_token = payload.value
+        break
+      case 'name':
+        state.temp_name = payload.name
+        break
+      default:
+        console.log('蛤')
+    }
+  },
   getLocalUser (state, payload) {
     state.login_email = localStorage.getItem('email')
     state.login_token = localStorage.getItem('token')
     state.login_name = localStorage.getItem('name')
+  },
+  logout (state) {
+    localStorage.removeItem('email')
+    localStorage.removeItem('token')
+    localStorage.removeItem('name')
+    state.login_email = ''
+    state.login_token = ''
+    state.login_name = ''
   },
   setUser (state, payload) {
     state.login_email = payload.email
@@ -69,6 +105,7 @@ const actions = {
 
 export default {
   state,
+  getters,
   mutations,
   actions
 }

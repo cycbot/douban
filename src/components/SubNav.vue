@@ -3,7 +3,12 @@
     <div class="navBottom" v-if="mold === 'navBottom'">
       <div class="nav-item">
         <router-link :to="{name: 'RegisterView'}">注册帐号</router-link><!-- replace blank
-        --><router-link :to="{name: 'LoginView'}">登录豆瓣</router-link>
+        --><template v-if="currentUser.email">
+          <a href="#" @click.prevent="logout()">退出登录</a>
+        </template>
+        <template v-else>
+          <router-link :to="{name: 'LoginView'}" replace>登录豆瓣</router-link>
+        </template>
       </div>
       <div class="nav-item">
         <a href="https://movie.douban.com/">使用桌面版</a><!-- replace blank
@@ -23,7 +28,12 @@
           <router-link :to="{name: 'RegisterView'}">注册账号</router-link>
         </li>
         <li>
-          <router-link :to="{name: 'LoginView'}">登录豆瓣</router-link>
+          <template v-if="currentUser.email">
+            <a href="#" @click.prevent="logout()">退出登录</a>
+          </template>
+          <template v-else>
+            <router-link :to="{name: 'LoginView'}" replace>登录豆瓣</router-link>
+          </template>
         </li>
       </ul>
     </div>
@@ -31,7 +41,7 @@
 </template>
 
 <script>
-
+  import { mapGetters } from 'vuex'
   export default {
     name: 'sub-nav',
     props: {
@@ -43,6 +53,30 @@
     data () {
       return {
 
+      }
+    },
+    computed: {
+      currentLink () {
+        return this.currentUser.name ? 'StatusView' : 'LoginView'
+      },
+      holder () {
+        return this.currentUser.name ? this.currentUser.name : '请先登录'
+      },
+      ...mapGetters(['currentUser'])
+    },
+    methods: {
+      logout () {
+        this.$store.commit({
+          type: 'logout'
+        })
+        this.$router.push({name: 'HomeView'})
+      }
+    },
+    created () {
+      if (localStorage.getItem('email')) {
+        this.$store.commit({
+          type: 'getLocalUser'
+        })
       }
     }
   };
