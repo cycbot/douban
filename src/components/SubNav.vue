@@ -51,9 +51,7 @@
       }
     },
     data () {
-      return {
-
-      }
+      return {}
     },
     computed: {
       currentLink () {

@@ -1,6 +1,6 @@
 <template>
   <div class="subject-view has-header">
-    <banner :title="bannerTitle"></banner>
+    <banner :title="聊聊你的观影感受"></banner>
     <div class="subject-card">
       <h1 class="title">{{subject.title}}</h1>
       <div class="subject-info">
@@ -35,7 +35,17 @@
           </span>
         </a>
       </div>
-      <subject-mark></subject-mark>
+      <subject-mark>
+        <template slot="book" v-if="subject.author">
+          <router-link :to="{ name: 'LoginView'}">想读</router-link>
+          <router-link :to="{ name: 'LoginView'}">在读</router-link>
+          <router-link :to="{ name: 'LoginView'}">读过</router-link>
+        </template>
+        <template slot="movie" v-else>
+          <router-link :to="{ name: 'LoginView'}">想看</router-link>
+          <router-link :to="{ name: 'LoginView'}">看过</router-link>
+        </template>
+      </subject-mark>
       <div class="subject-intro">
         <h2>{{subject.title}}的简介</h2>
         <p>
@@ -114,7 +124,6 @@
     },
     computed: {
       ...mapState({
-        bannerTitle: state => state.subject.bannerTitle,
         subject: state => state.subject.subject,
         adImgUrl:state => state.subject.adImgUrl,
         questions: state => state.subject.questions,
