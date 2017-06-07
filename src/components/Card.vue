@@ -6,7 +6,9 @@
       </a>
       <a href="#">
         <div class="user-info">
-          <strong>豆瓣<span v-if="mold === 'quote'">写了日记</span></strong>
+          <strong>
+            豆瓣<span v-if="mold === 'quote'">写了日记
+          </span></strong>
           <div class="timestamp">2017-03-01 19:30:41</div>
         </div>
       </a>
@@ -19,6 +21,9 @@
         - 可以写读书笔记了，同时支持编辑。随时随地，摘录怦然心动的段落，写下阅读时的随感。来写笔记吧，你...
       </div>
     </div>
+    <p v-if="mold === 'comment'" class="comment">
+      可以写读书笔记了，同时支持编辑。随时随地，摘录怦然心动的段落，写下阅读时的随感。来写笔记吧，你
+    </p>
     <div class="info">
       <span class="btn like"><i>4</i></span>
       <span v-if="mold === 'quote'" class="btn comment"><i>0</i></span>
@@ -39,11 +44,9 @@
         }
       },
       data () {
-        return {
-
-        }
+        return {}
       }
-    };
+    }
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>

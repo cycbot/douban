@@ -87,7 +87,7 @@
           ]
         }
       }
-    };
+    }
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
@@ -115,13 +115,15 @@
       font-size: 1.6rem;
       border-top: solid 0.1rem #eee;
       border-right: solid 0.1rem #eee;
+
+      a {
+        color: #42bd56;
+      }
     }
     li:nth-child(2n) {
       padding-left: 1.8rem;
     }
-    a {
-      color: #42bd56;
-    }
+
     span {
       color: #ccc;
       float: right;

@@ -20,9 +20,10 @@
 
 <script>
   import { mapState } from 'vuex'
-  import Scroller from '../components/Scroller.vue'
-  import Types from '../components/Types.vue'
-  import DownloadApp from '../components/DownloadApp.vue'
+  import Scroller from '../components/Scroller'
+  import Types from '../components/Types'
+  import DownloadApp from '../components/DownloadApp'
+
   export default {
     name: 'book-view',
     components: {
@@ -31,9 +32,7 @@
       DownloadApp
     },
     data () {
-      return {
-
-      }
+      return {}
     },
     computed: {
       ...mapState({
@@ -49,7 +48,7 @@
       }
     },
     created () {
-        this.getBook()
+      this.getBook()
     }
   };
 </script>
@@ -57,13 +56,15 @@
 <style lang="scss" rel="stylesheet/scss" scoped>
   .promItem {
     overflow: hidden;
-    margin: 1.6rem 1.8rem 0 1.6rem;
+    margin: 1.6rem 1.8rem 0.8rem 1.6rem;
   }
+
   .cover {
     float: left;
     width: 10rem;
     margin-right: 1.5rem;
   }
+
   .name {
     font-size: 2rem;
     color: #494949;
@@ -75,12 +76,14 @@
     white-space: nowrap;
     word-wrap: normal;
   }
+
   .price {
     float: right;
     color: #E76648;
     font-size: 1.6rem;
     line-height: 2.2rem;
   }
+
   .info {
     font-size: 1.3rem;
     font-weight: 300;

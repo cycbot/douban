@@ -1,7 +1,9 @@
 <template>
   <div class="list">
    <template v-if="mold === 'thumbnail'" v-for="item in items">
-     <router-link class="thumbnail" :to="{name: 'DetailView', params: { id: item.id }}">
+     <router-link
+       class="thumbnail"
+       :to="{name: 'DetailView', params: { id: item.id }}">
        <div class="content">
          <img :src="item.image_hlarge" alt="cover">
          <h3>{{item.title}}</h3>
@@ -43,9 +45,7 @@
       }
     },
     data () {
-      return {
-
-      }
+      return {}
     },
     filters: {
       subStr: function (value) {
@@ -53,7 +53,7 @@
         return value.slice(0,30)
       }
     }
-  };
+  }
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
@@ -106,7 +106,7 @@
       }
     }
 
-    .thumbnail~ .thumbnail::before {
+    .thumbnail ~ .thumbnail::before {
       position: absolute;
       left: 0;
       top: 0;

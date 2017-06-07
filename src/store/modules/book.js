@@ -75,7 +75,7 @@ const actions = {
             .then(res => {
               commit({
                 type: 'getBook',
-                tag: 'novel',
+                tag: 'reality',
                 res: res.body.books
               })
             })

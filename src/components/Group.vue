@@ -23,8 +23,8 @@
           </div>
         </router-link>
       </li>
-      <slot name="more"></slot>
     </ul>
+    <slot name="more"></slot>
   </div>
 </template>
 
@@ -79,10 +79,12 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
     .group-member {
       color: #ccc;
       font-size: 1.5rem;
     }
+
     .group-topic {
       margin-top: 1rem;
       font-size: 1.5rem;
@@ -91,6 +93,7 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
   }
   li {
     border-bottom: 1px solid #F2F2F2;

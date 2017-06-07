@@ -1,12 +1,10 @@
 <template>
   <div class="tags">
-    <template v-if="items">
-      <ul>
-        <li v-for="items in items">
-          <a href="#">{{item.name ? item.name : item}}</a>
-        </li>
-      </ul>
-    </template>
+    <ul>
+      <li v-for="item in items">
+        <a href="#">{{item.name ? item.name : item}}</a>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -20,16 +18,13 @@
       }
     },
     data () {
-      return {
-
-      }
+      return {}
     }
   };
 </script>
 
 <style lang="scss" rel="stylesheet/scss" scoped>
   .tags {
-
     li {
       display: inline-block;
       margin: 1rem 1rem 0 0;

@@ -25,15 +25,13 @@
 </template>
 
 <script>
-    import Rating from './Rating.vue'
+    import Rating from './Rating'
     export default {
       name: 'scroller',
       props: ['title', 'type', 'items'],
       components: { Rating },
       data () {
-        return {
-
-        }
+        return {}
       }
     };
 </script>
@@ -57,7 +55,6 @@
 
     h2 {
       display: inline-block;
-      margin: 0;
     }
   }
   .content {
